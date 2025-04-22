@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mindbox
+  labels:
+    app: mindbox
+spec:
+  ports:
+    - name: mindbox ## Имя порта
+      protocol: HTTP
+      port: 8080 ## Порт нашего сервиса
+      targetPort: 8080 ## "NAT-ируем" на аналогичный порт
+  selector:
+    app: mindbox ## Селектор нашего сервиса
+  type: ClusterIP ## Пусть будет http-сервис, с точкой входа через ingress
+

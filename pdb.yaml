@@ -1,0 +1,10 @@
+## Для дополтильной надежности добавим PDB (например, при обслуживании нод (hpa, ca etc...):
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: mindbox
+spec:
+  minAvailable: 2 ## гарантируем доступность 2 реплик
+  selector:
+    matchLabels:
+      app: mindbox

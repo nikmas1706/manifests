@@ -1,0 +1,22 @@
+## В ТЗ вроде как не было это указано, но пусть будет точка входа в наше приложении "снаружи"
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mindbox-ingress
+spec:
+  tls:
+    - hosts:
+        - app.mindbox.ru ## Тестовый домен
+      secretName: mindbox-tls-secret ## Секрет с сертификатом, подтвержадющий владение доменом, шифруем наш трафик
+  ingressClassName: nginx ## Пусть будет nginx
+  rules:
+    - host: app.mindbox.ru ## Server name
+      http:
+        paths:
+          - path: / ## Проксируем в root
+            pathType: Prefix ## Используем префиксы для правил
+            backend:
+              service:
+                name: mindbox ## Лейбл нашего сервиса
+                port:
+                  number: 8080 ## порт нашего сервиса
